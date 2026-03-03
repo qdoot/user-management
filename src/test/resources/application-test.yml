@@ -1,0 +1,28 @@
+# Profilo attivato automaticamente nei test di integrazione.
+# Testcontainers sovrascrive dinamicamente host e porta dei container
+# tramite @DynamicPropertySource — questi valori sono placeholder
+# e vengono ignorati a runtime nei test.
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        show_sql: false
+
+  # Disabilita Flyway nel profilo test: i test di integrazione
+  # usano Testcontainers con schema gestito via @Sql o Flyway stesso
+  # con container dedicato. Viene riabilitato selettivamente.
+  flyway:
+    enabled: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # In test sostituito con mock — il valore reale non viene raggiunto
+          jwk-set-uri: http://localhost:9999/mock-jwks
+
+logging:
+  level:
+    com.company.usermanagement: INFO
+    org.hibernate.SQL: false

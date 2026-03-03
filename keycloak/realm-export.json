@@ -1,0 +1,80 @@
+{
+  "realm": "user-management",
+  "enabled": true,
+  "displayName": "User Management",
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "roles": {
+    "realm": [
+      { "name": "OWNER",      "description": "Accesso completo a tutte le operazioni" },
+      { "name": "OPERATOR",   "description": "Può creare e modificare utenti" },
+      { "name": "MAINTAINER", "description": "Può modificare utenti esistenti" },
+      { "name": "DEVELOPER",  "description": "Accesso in sola lettura" },
+      { "name": "REPORTER",   "description": "Accesso in sola lettura con campi mascherati" }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "user-management-service",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "um-secret-change-in-production",
+      "bearerOnly": false,
+      "publicClient": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "standardFlowEnabled": true,
+      "protocol": "openid-connect",
+      "redirectUris": ["http://localhost:8080/*"],
+      "webOrigins": ["http://localhost:8080"]
+    },
+    {
+      "clientId": "swagger-ui",
+      "enabled": true,
+      "publicClient": true,
+      "bearerOnly": false,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": true,
+      "protocol": "openid-connect",
+      "redirectUris": [
+        "http://localhost:8080/api/swagger-ui/*",
+        "http://localhost:8080/api/swagger-ui.html"
+      ],
+      "webOrigins": ["http://localhost:8080"]
+    }
+  ],
+  "users": [
+    {
+      "username": "owner-user",
+      "enabled": true,
+      "email": "owner@example.com",
+      "firstName": "Owner",
+      "lastName": "User",
+      "credentials": [{ "type": "password", "value": "password", "temporary": false }],
+      "realmRoles": ["OWNER"]
+    },
+    {
+      "username": "operator-user",
+      "enabled": true,
+      "email": "operator@example.com",
+      "firstName": "Operator",
+      "lastName": "User",
+      "credentials": [{ "type": "password", "value": "password", "temporary": false }],
+      "realmRoles": ["OPERATOR"]
+    },
+    {
+      "username": "reporter-user",
+      "enabled": true,
+      "email": "reporter@example.com",
+      "firstName": "Reporter",
+      "lastName": "User",
+      "credentials": [{ "type": "password", "value": "password", "temporary": false }],
+      "realmRoles": ["REPORTER"]
+    }
+  ]
+}
