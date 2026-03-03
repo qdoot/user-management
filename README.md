@@ -93,7 +93,7 @@ Utenti di test preconfigurati nel realm:
 | operator-user | password | OPERATOR |
 | reporter-user | password | REPORTER |
 
-Inserire il token nella Swagger UI tramite il pulsante **Authorize** → `Bearer <token>`.
+Inserire solo il token grezzo (senza prefisso "Bearer") nel campo bearerAuth — Swagger lo aggiunge automaticamente.
 
 ---
 
@@ -102,9 +102,11 @@ Inserire il token nella Swagger UI tramite il pulsante **Authorize** → `Bearer
 # Unit test
 mvn test
 
-# Tutti i test (unit + integrazione — richiede Docker)
+# Su Windows: impostare la variabile di sistema TESTCONTAINERS_RYUK_DISABLED=true
+# prima di eseguire mvn verify
 mvn verify
 ```
+
 
 ---
 
