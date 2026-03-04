@@ -134,7 +134,7 @@ Il progetto segue una separazione netta in tre layer: Controller (HTTP), Service
 La cancellazione degli utenti è logica: il campo `status` viene impostato a `DELETED`, il record rimane nel database per audit. `@SQLRestriction` su Hibernate esclude automaticamente questi record da tutte le query senza filtri manuali.
 
 ### PostgreSQL vs MongoDB
-Il dominio è relazionale: utenti con ruoli in relazione many-to-many, vincoli di unicità stretti, transazioni ACID sulla creazione. MongoDB non porta vantaggi reali e introduce flessibilità di schema non necessaria.
+Il dominio è relazionale: utenti con ruoli in relazione many-to-many, vincoli di unicità stretti, transazioni ACID sulla creazione.
 
 ### Keycloak come IAM esterno
 Il servizio non gestisce password né emette token — è esclusivamente un Resource Server. Keycloak centralizza autenticazione e gestione ruoli. In un ecosistema a microservizi tutti i servizi validano lo stesso JWT senza duplicare la logica di autenticazione.
@@ -146,7 +146,7 @@ MapStruct genera codice a compile-time: zero overhead di reflection a runtime, e
 L'exchange di tipo Topic permette routing flessibile tramite pattern sulla routing key. Aggiungere un nuovo tipo di evento non richiede modifiche all'infrastruttura esistente.
 
 ### Testcontainers nei test di integrazione
-I test di integrazione girano contro container Docker reali di PostgreSQL e RabbitMQ — non H2 in memoria. Questo garantisce che le query JPA, i vincoli e le migration Flyway si comportino esattamente come in produzione.
+I test di integrazione girano contro container Docker reali di PostgreSQL e RabbitMQ. Questo garantisce che le query JPA, i vincoli e le migration Flyway si comportino esattamente come in produzione.
 
 ---
 
@@ -170,5 +170,3 @@ Una pipeline CI/CD minimale per questo progetto includerebbe:
 3. **Docker Build** — `docker build` e push su registry (Docker Hub, ECR, ecc.)
 4. **Deploy staging** — `docker compose pull && docker compose up -d` sull'ambiente di staging
 5. **Deploy production** — stesso comando su produzione, con approvazione manuale
-
-Tool consigliati: GitHub Actions per semplicità, GitLab CI per ambienti on-premise.
